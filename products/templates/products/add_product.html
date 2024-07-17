@@ -1,8 +1,25 @@
-<form action="{% url "add_product" %}" method="post">
-    {% csrf_token %}
+{% extends "layouts/base.html" %}
 
-    {{ form.as_p }}
+{% block title %}Product Add{% endblock title %}
 
-    <button>Save</button>
+{% block content %}
 
-</form>
+    <h1 class="font-bold text-center text-2xl text-blue-700 uppercase">Add Product</h1>
+
+    <section class="flex flex-row items-center justify-center">
+        <a 
+        href="{% url 'list_product' %}"
+        class="px-3 py-1 rounded-md font-normal text-md bg-white text-red-700 hover:text-white hover:bg-red-700 transition ease-in-out duration-300"
+        >Back</a>
+    </section>
+
+    <form action="{% url "add_product" %}" method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button>Save</button>
+
+    </form>
+
+{% endblock %}
