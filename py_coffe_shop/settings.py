@@ -128,9 +128,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = ''
-
 LOGIN_REDIRECT_URL = 'list_product'
 LOGOUT_REDIRECT_URL = 'list_product'
 LOGIN_URL = 'login'
