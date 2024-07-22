@@ -9,3 +9,9 @@ class Order(models.Model):
 
     def __str__(self) -> str:
         return f"order {self.id} by {self.user}"
+
+    def get_total(self):
+        total = 0
+        for order_product in self.orderproduct_set.all():
+            total += order_product.get_subtotal()
+        return total

@@ -12,3 +12,6 @@ class OrderProduct(models.Model):
 
     def __str__(self) -> str:
         return f"{self.order} - {self.product}"
+
+    def get_subtotal(self):
+        return self.quantity * self.product.price

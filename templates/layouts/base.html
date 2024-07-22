@@ -9,9 +9,23 @@
 <body>
 
     <header>
-        <nav class="flex flex-row items-center p-4 bg-slate-700 text-white">
+        <nav class="flex flex-row items-center p-4 gap-4 bg-slate-700 text-white">
+            <!-- my order -->
+            <a
+                href="{% url "my_order" %}"
+                class="text-white"
+            >
+                My order
+            </a>
+            <!-- products -->
+            <a
+                href="{% url "list_product" %}"
+                class="text-white"
+            >
+                Products
+            </a>
             {% if user.is_authenticated %}
-                <h3 class="font-bold text-lg flex-grow">Welcome {{ user.username }}</h3>
+                <h3 class="font-bold text-lg">Welcome {{ user.username }}</h3>
                 
                 <!-- logout -->
                 <form
@@ -24,7 +38,7 @@
                         class="text-white"
                     >
                     Logout
-                    <button/>
+                    </button>
                 </form> 
 
             {% else %}
@@ -36,9 +50,12 @@
         </nav>
     </header>
 
-    <main>
-        {% block content %}
-        {% endblock %}
+    <main class="flex justify-center w-full h-full p-20">
+        <div class="flex flex-col w-full">
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
+
 </body>
 </html>

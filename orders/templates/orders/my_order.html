@@ -1,0 +1,56 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}My order{% endblock %}
+
+{% block content %}
+
+    <section class="border border-black p-8 rounded-md w-full shadow-sm hover:bg-slate-100 hover:shadow-lg transition ease duration-300">
+        <article>
+            <header class="inline-flex items-start justify-between w-full">
+                <h3
+                    class="font-bold text-2xl text-blue-700"
+                    title="Username of order"
+                >{{ order.user }}</h3>
+                <time
+                    class="font-medium text-lg text-gray-700 italic"
+                    title="Order date"
+                >{{ order.order_date|date }}</time>
+            </header>
+            <footer>
+                <table class="table table-fixed w-full">
+                    <thead>
+                    <tr class="font-bold text-md uppercase text-stone-900">
+                        <th class="text-left">Product</th>
+                        <th class="text-left">Price</th>
+                        <th class="text-left">Quantity</th>
+                        <th class="text-right">Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order_product in order.orderproduct_set.all %}
+                        <tr class="hover:bg-slate-200 transition ease duration-300">
+                            <td class="text-left text-md text-stone-700">{{ order_product.product.name }}</td>
+                            <td class="text-left text-md text-stone-700">{{ order_product.product.price }}</td>
+                            <td class="text-left text-md text-stone-700">{{ order_product.quantity }}</td>
+                            <td class="text-right text-md text-stone-800 font-semibold">{{ order_product.get_subtotal }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">
+                                <p class="font-semibold text-left text-md text-yellow-700">Your order hasn't products</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tbody id="total">
+                        <tr>
+                            <td colspan="3" class="text-right font-semibold text-lg italic">Total</td>
+                            <td class="text-right font-bold text-lg italic">{{ order.get_total }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </footer>
+        </article>
+    </section>
+
+{% endblock content %}
