@@ -13,8 +13,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# Enable environ to read .env file
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -83,11 +88,11 @@ WSGI_APPLICATION = 'py_coffe_shop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dev_py_coffe_shop',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': env.str('DJANGO_DB_HOST'),
+        'PORT': env.int('DJANGO_DB_PORT'),
+        'NAME': env.str('DJANGO_DB_NAME'),
+        'USER': env.str('DJANGO_DB_USER'),
+        'PASSWORD': env.str('DJANGO_DB_PASSWORD'),
     }
 }
 
