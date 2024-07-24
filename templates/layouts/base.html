@@ -9,45 +9,7 @@
 <body>
 
     <header>
-        <nav class="flex flex-row items-center p-4 gap-4 bg-slate-700 text-white">
-            <!-- my order -->
-            <a
-                href="{% url "my_order" %}"
-                class="text-white"
-            >
-                My order
-            </a>
-            <!-- products -->
-            <a
-                href="{% url "list_product" %}"
-                class="text-white"
-            >
-                Products
-            </a>
-            {% if user.is_authenticated %}
-                <h3 class="font-bold text-lg">Welcome {{ user.username }}</h3>
-                
-                <!-- logout -->
-                <form
-                    action="{% url "logout" %}"
-                    method="post"
-                >
-                    {% csrf_token %}
-                    <button
-                        type="submit"
-                        class="text-white"
-                    >
-                    Logout
-                    </button>
-                </form> 
-
-            {% else %}
-                <a 
-                    href="{% url "login" %}"
-                    class="text-white"
-                >Login</a>
-            {% endif %}
-        </nav>
+        {% include "navs/main-nav.html" %}
     </header>
 
     <main class="flex justify-center w-full h-full p-20">

@@ -1,0 +1,58 @@
+<nav class="bg-white p-6 inline-flex items-center gap-2 w-full shadow-lg static">
+    {#  brand  #}
+    <a
+        class="inline-flex flex-shrink items-center gap-2 hover:bg-zinc-200 rounded-md transition ease-in-out duration-300 px-3 py-1"
+        href="{% url 'list_product' %}"
+    >
+        {% include "icons/cup.svg" %}
+        <h3 class="font-bold text-md lg:text-xl text-black">PyCoffeShop</h3>
+    </a>
+    {#  links  #}
+    <div class="w-full flex-grow inline-flex items-center justify-end gap-2">
+
+        {#  products  #}
+        <a
+            class="inline-flex hover:bg-zinc-200 hover:shadow-sm rounded-md transition ease-in-out duration-300 px-3 py-1 font-medium text-md lg:text-lg text-slate-900"
+            href="{% url 'list_product' %}"
+        >
+            Products
+        </a>
+        {#  my order  #}
+        <a
+            class="inline-flex hover:bg-zinc-200 hover:shadow-sm rounded-md transition ease-in-out duration-300 px-3 py-1 font-medium text-md lg:text-lg text-slate-900"
+            href="{% url 'my_order' %}"
+        >
+            My order
+        </a>
+        {% if user.is_authenticated %}
+            {#  profile  #}
+            <a
+                class="inline-flex hover:bg-zinc-200 hover:shadow-sm rounded-md transition ease-in-out duration-300 px-3 py-1 font-medium text-md lg:text-lg text-slate-900"
+                href="#"
+            >
+                Profile
+            </a>
+            <!-- logout -->
+            <form
+                action="{% url "logout" %}"
+                method="post"
+            >
+                {% csrf_token %}
+                <button
+                    type="submit"
+                    class="inline-flex hover:bg-zinc-200 hover:shadow-sm rounded-md transition ease-in-out duration-300 px-3 py-1 font-medium text-md lg:text-lg text-slate-900"
+                >
+                    Logout
+                </button>
+            </form>
+        {% else %}
+            {#  login  #}
+            <a
+                class="inline-flex hover:bg-zinc-200 hover:shadow-sm rounded-md transition ease-in-out duration-300 px-3 py-1 font-medium text-md lg:text-lg text-slate-900"
+                href="{% url 'login' %}"
+            >
+                Login
+            </a>
+        {% endif %}
+    </div>
+</nav>
