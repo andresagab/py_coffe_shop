@@ -6,13 +6,37 @@
 <div class="container mx-auto w-1/3">
     <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Create your account</h1>
     <form action="" method="post" class="my-8">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button
-            class="inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500" 
-            type="submit">
-            Registrarse
-        </button>
+        <section class="flex flex-col items-start justify-between gap-3">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="flex flex-col w-full">
+                    <label
+                            class="font-semibold text-gray-900 text-md"
+                            for="{{ field.id_for_label }}"
+                    >
+                        {{ field.label_tag }}
+                    </label>
+                    <input
+                            type="{{ field.widget_type }}"
+                            name="{{ field.html_name }}"
+                            class="font-normal text-md text-slate-800 p-1 border border-black rounded-sm w-full"
+                            placeholder="Tipe your {{ field.label }}"
+                    >
+                    {% if field.help_text %}
+                        <span class="font-normal text-gray-700 text-xs">{{ field.help_text }}</span>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <span class="font-normal text-red-700 text-xs">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button
+                class="inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+                type="submit">
+                Registrarse
+            </button>
+        </section>
     </form>
     <p class="text-center text-sm text-gray-500 mt-4">
         Do you have an account?
