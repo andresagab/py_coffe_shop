@@ -10,3 +10,6 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_avg_rating(self):
+        return self.productrating_set.aggregate(models.Avg("rating"))
