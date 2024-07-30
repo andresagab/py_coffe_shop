@@ -27,6 +27,22 @@
                 </footer>
             </article>
         </article>
+    
+        <div class="block mt-8">
+            {#  section title  #}
+            <h1 class="font-bold text-4xl pb-4 border-b border-gray-500 w-full mb-8">Rating and Reviews</h1>
+            {% if product.available and user.is_authenticated %}
+                {% include "products/add_product_rating.html" with product=product %}
+            {% else %}
+                <p class="font-semibold text-md text-black-700 text-center italic">Login to add rating:
+                    <a
+                        href="{% url 'login' %}"
+                        title="Login"
+                        class="text-indigo-600 underline"
+                    >Go</a>
+                </p>
+            {% endif %}
+        </div>
 
     </div>
 {% endblock %}
