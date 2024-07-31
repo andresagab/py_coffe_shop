@@ -1,21 +1,4 @@
 {#  template  #}
-
-{% if messages %}
-    <ul>
-        {% for message in messages %}
-            {% if message.tags == 'error' %}
-                <li class="bg-rose-400 font-semibold w-full text-md text-red-900 p-2 rounded-md">
-            {% elif message.tags == 'success' %}
-                <li class="bg-lime-400 font-semibold w-full text-md text-green-900 p-2 rounded-md">
-            {% else %}
-                <li class="bg-amber-300 font-semibold w-full text-md text-amber-900 p-2 rounded-md">
-            {% endif %}
-                {{ message }}
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
-
 <form
     action="{% url 'add_product_rating' %}"
     method="post"

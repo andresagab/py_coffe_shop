@@ -1,0 +1,37 @@
+{% if messages %}
+    <ul class="fixed block w-full">
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <li class="bg-red-900 text-center py-4 lg:px-4" id="{{ message.tags }}-{{ forloop.counter }}">
+                    <div class="p-2 bg-rose-800 items-center text-rose-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                        <span class="flex rounded-full bg-rose-500 uppercase px-2 py-1 text-xs font-bold mr-3">Error</span>
+            {% elif message.tags == 'success' %}
+                <li class="bg-lime-900 text-center py-4 lg:px-4" id="{{ message.tags }}-{{ forloop.counter }}">
+                    <div class="p-2 bg-lime-800 items-center text-lime-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                        <span class="flex rounded-full bg-lime-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
+            {% else %}
+                <li class="bg-yellow-900 text-center py-4 lg:px-4" id="{{ message.tags }}-{{ forloop.counter }}">
+                    <div class="p-2 bg-amber-800 items-center text-amber-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                        <span class="flex rounded-full bg-amber-500 uppercase px-2 py-1 text-xs font-bold mr-3">Warning</span>
+            {% endif %}
+                    <span class="font-semibold mr-2 text-left flex-auto">{{ message }}</span>
+                    <button
+                            class="rounded-full p-1 hover:shadow-md hover:opacity-75 transition ease-in-out duration-300"
+                            title="Click to close"
+                            type="button"
+                            onclick="closeFlashMessage('{{ message.tags }}-{{ forloop.counter }}')"
+                    >
+                        {% include 'icons/close.svg' %}
+                    </button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<script>
+    const closeFlashMessage = (id) => {
+        let element = document.getElementById(id)
+        element.classList.add('hidden')
+    }
+</script>
