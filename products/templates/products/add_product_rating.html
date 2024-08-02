@@ -5,7 +5,7 @@
     class="flex flex-col gap-3 w-full"
 >
     {% csrf_token %}
-    <span class="font-semibold text-lg text-gray-900">Rating</span>
+    <span class="font-semibold text-lg text-gray-900">Rating:</span>
     <div class="flex flex-col gap-3 w-full">
         <input type="hidden" name="product" id="product_id" value="{{ product.id }}">
         <!-- component -->
@@ -68,13 +68,14 @@
     {% endfor %}
 
     <div class="flex flex-col gap-3 w-full">
-        <label for="comment" class="font-semibold text-lg text-gray-900">Review</label>
+        <label for="comment" class="font-semibold text-lg text-gray-900">Review:</label>
         <textarea
             name="comment"
             id="comment"
             class="font-normal text-md text-slate-800 p-1 border border-black rounded-sm w-full"
             placeholder="Tipe your review in 500 characters"
             value=""
+            maxlength="500"
         ></textarea>
     </div>
     {% for error in form.comment.errors %}

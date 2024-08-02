@@ -1,0 +1,35 @@
+<div>
+
+    <h1 class="font-bold text-4xl pb-4 border-b border-gray-500 w-full mt-8">Reviews</h1>
+
+    <div class="grid grid-cols-1 gap-4 py-2 max-h-lvh overflow-x-auto">
+        {% for product_rating in product_ratings %}
+            <blockquote class="border border-gray-200 shadow-sm hover:shadow-lg rounded-md p-4 transition ease duration-150">
+                <header class="flex flex-col gap-3">
+                    <div class="inline-flex items-center justify-start">
+                        {% with ''|center:product_rating.rating as range %}
+                            {% for _ in range %}
+                                <span class="text-yellow-500 text-2xl">★</span>
+                            {% endfor %}
+                        {% endwith %}
+                    </div>
+                    <h3 class="font-semibold text-xl text-gray-800">{{ product_rating.user }}</h3>
+                </header>
+                <footer class="flex flex-col gap-4">
+                    <p class="font-normal text-md text-gray-700">{{ product_rating.comment }}</p>
+                    <time
+                        class="font-normal text-md text-gray-700 italic text-right"
+                        title="Review date"
+                    >
+                        {{ product_rating.created_at|date }}
+                    </time>
+                </footer>
+            </blockquote>
+
+        {% empty %}
+            <p>No reviews yet</p>
+        {% endfor %}
+
+    </div>
+
+</div>
