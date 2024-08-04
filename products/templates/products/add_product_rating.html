@@ -82,6 +82,13 @@
         <span class="font-semibold text-red-700 text-sm">{{ error }}</span>
     {% endfor %}
 
+    {#  non field errors  #}
+    {% for field, error in form.errors.items %}
+        {% if field == '__all__' %}
+            <span class="font-semibold text-red-700 text-sm">{{ error }}</span>
+        {% endif %}
+    {% endfor %}
+
     {% include "components/buttons/common_button.html" with type="submit" name="Send Review" %}
 
 </form>

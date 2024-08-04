@@ -10,7 +10,7 @@ class ProductRatingForm(ModelForm):
         fields = [
             'product',
             'rating',
-            'comment'
+            'comment',
         ]
 
     def clean_rating(self):
@@ -26,3 +26,12 @@ class ProductRatingForm(ModelForm):
         elif not comment:
             raise forms.ValidationError('Comment is required')
         return comment
+
+    def clean(self):
+        cleaned_data = super().clean()
+        product = cleaned_data.get('product')
+        user = self.instance.user
+        if user and product and ProductRating.objects.filter(product=product, user=user).exists():
+            raise forms.ValidationError('You have already rated this product, to set it, first delete from your ratings')
+
+        return cleaned_data

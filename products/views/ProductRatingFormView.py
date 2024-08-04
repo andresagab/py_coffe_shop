@@ -26,5 +26,11 @@ class ProductRatingFormView(LoginRequiredMixin, CreateView):
     def form_invalid(self, form):
         messages.warning(self.request, "Failed to add rating.")
         return render(self.request, self.template_name, {'form': form, 'product': form.instance.product})
-        #return HttpResponseRedirect(reverse_lazy("info_product", kwargs={"pk": form.instance.product.id}))
-        #return super().form_invalid(form)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        form.instance.user = self.request.user
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
