@@ -12,4 +12,4 @@ class Product(models.Model):
         return self.name
 
     def get_avg_rating(self):
-        return self.productrating_set.aggregate(models.Avg("rating"))
+        return self.productrating_set.aggregate(models.Avg("rating")).get("rating__avg")

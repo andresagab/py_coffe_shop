@@ -22,8 +22,16 @@
                         <p class="font-normal text-lg text-gray-700">{{ product.description }}</p>
                     {% endif %}
                 </header>
-                <footer class="flex items-center w-full">
+                <footer class="flex items-center justify-between w-full">
                     <h3 class="font-semibold text-black text-xl justify-self-start">${{ product.price }}</h3>
+                    {% if product.productrating_set.count > 0 %}
+                        <div class="flex items-center gap-1">
+                            <span class="font-bold text-lg text-slate-700 italic">{{ product.get_avg_rating }}</span>
+                            {% include "icons/star_filled.svg" %}
+                        </div>
+                    {% else %}
+                    	<span class="font-bold text-lg text-indigo-700 italic">No rating yet</span></span>
+                    {% endif %} 
                 </footer>
             </article>
         </article>
