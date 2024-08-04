@@ -8,5 +8,6 @@ class OrderProductForm(ModelForm):
         model = OrderProduct
         # fields to use in the form
         fields = [
-            'product'
+            'product',
+            'quantity',
         ]

@@ -1,9 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from orders.forms import OrderProductForm
-from orders.models import Order
+from orders.models import Order, OrderProduct
 
 
 class CreateOrderProductView(LoginRequiredMixin, CreateView):
@@ -22,7 +24,22 @@ class CreateOrderProductView(LoginRequiredMixin, CreateView):
         )
         # set form order instance to store it
         form.instance.order = order
-        form.instance.quantity = 1
-        form.save()
 
-        return super().form_valid(form)
+        # if product already in order, update quantity
+        if form.instance.product and OrderProduct.objects.filter(order=order, product=form.instance.product).exists():
+            order_product = order.orderproduct_set.get(product=form.instance.product)
+            print(order_product)
+            order_product.quantity += form.instance.quantity
+            order_product.save()
+
+            messages.success(self.request, f"Product added successfully to order #{order.id}!")
+            return HttpResponseRedirect(reverse_lazy("my_order"))
+        else:
+            form.save()
+
+            messages.success(self.request, f"Product added successfully to order #{order.id}!")
+            return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.warning(self.request, "Failed to add product to order.")
+        return super().form_invalid(form)
