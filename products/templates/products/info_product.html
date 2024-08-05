@@ -21,6 +21,10 @@
                     {% if product.description %}
                         <p class="font-normal text-lg text-gray-700">{{ product.description }}</p>
                     {% endif %}
+                    {#  new label #}
+                    {% if product.still_new %}
+                        <span class="whitespace-nowrap bg-yellow-400 px-3 py-1.5 text-xs font-medium w-min"> New </span>
+                    {% endif %}
                 </header>
                 <footer class="flex items-center justify-between w-full">
                     <h3 class="font-semibold text-black text-xl justify-self-start">${{ product.price }}</h3>

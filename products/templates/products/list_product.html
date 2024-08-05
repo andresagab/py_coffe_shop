@@ -44,12 +44,14 @@
                     <div class="relative border border-gray-300 shadow-sm hover:bg-gray-50 transition ease-in-out duration-300 bg-white p-6">
 
                         {#  new label #}
-                        {% comment %}<span class="whitespace-nowrap bg-yellow-400 px-3 py-1.5 text-xs font-medium"> New </span>{% endcomment %}
+                        {% if product.still_new %}
+                            <span class="whitespace-nowrap bg-yellow-400 px-3 py-1.5 text-xs font-medium"> New </span>
+                        {% endif %}
 
                         {# product name #}
                         <a
                             href="{% url 'info_product' product.id %}"
-                            class="block mt-0 text-lg font-semibold text-gray-900 hover:text-slate-800 transition ease-in-out duration-150 hover:underline"
+                            class="block mt-4 text-lg font-semibold text-gray-900 hover:text-slate-800 transition ease-in-out duration-150 hover:underline"
                         >
                             {{ product.name }}
                         </a>
