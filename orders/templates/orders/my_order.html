@@ -1,56 +1,69 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}My order{% endblock %}
+{% block title %}
+    My order
+    {% if order %}
+    	#{{ order.id }}
+    {% endif %} 
+{% endblock %}
 
 {% block content %}
 
-    <section class="border border-black p-8 rounded-md w-full shadow-sm hover:bg-slate-100 hover:shadow-lg transition ease duration-300">
-        <article>
-            <header class="inline-flex items-start justify-between w-full">
-                <h3
-                    class="font-bold text-2xl text-blue-700"
-                    title="Username of order"
-                >{{ order.user }}</h3>
-                <time
-                    class="font-medium text-lg text-gray-700 italic"
-                    title="Order date"
-                >{{ order.order_date|date }}</time>
-            </header>
-            <footer>
-                <table class="table table-fixed w-full">
-                    <thead>
-                    <tr class="font-bold text-md uppercase text-stone-900">
-                        <th class="text-left">Product</th>
-                        <th class="text-left">Price</th>
-                        <th class="text-left">Quantity</th>
-                        <th class="text-right">Subtotal</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for order_product in order.orderproduct_set.all %}
-                        <tr class="hover:bg-slate-200 transition ease duration-300">
-                            <td class="text-left text-md text-stone-700">{{ order_product.product.name }}</td>
-                            <td class="text-left text-md text-stone-700">{{ order_product.product.price }}</td>
-                            <td class="text-left text-md text-stone-700">{{ order_product.quantity }}</td>
-                            <td class="text-right text-md text-stone-800 font-semibold">{{ order_product.get_subtotal }}</td>
+    <div class="container mx-auto w-full lg:w-max pt-4 lg:pt-0 lg:p-6">
+
+        {#  section title  #}
+        <h1 class="font-bold text-4xl pb-4 border-b border-gray-500 w-full mb-8">Order #{{ order.id }}</h1>
+
+        <section class="border border-gray-300 p-8 rounded-md w-full shadow-md hover:bg-slate-100 hover:shadow-lg transition ease duration-300">
+            <article class="block w-full">
+                <header class="inline-flex items-start justify-between w-full mb-8">
+                    {#  status  #}
+                    <h3
+                        class="font-bold text-2xl text-blue-700"
+                        title="Username of order"
+                    >{{ order.status }}</h3>
+                    <time
+                        class="font-medium text-lg text-gray-700 italic"
+                        title="Order date"
+                    >{{ order.order_date|date }}</time>
+                </header>
+                <footer class="block w-full">
+                    <table class="table table-auto lg:table-fixed">
+                        <thead>
+                        <tr class="font-bold text-md uppercase text-stone-900">
+                            <th class="text-left w-96 p-2">Product</th>
+                            <th class="text-right w-32 p-2">Price</th>
+                            <th class="text-right w-32 p-2">Quantity</th>
+                            <th class="text-right w-32 p-2">Subtotal</th>
                         </tr>
-                    {% empty %}
-                        <tr>
-                            <td colspan="4">
-                                <p class="font-semibold text-left text-md text-yellow-700">Your order hasn't products</p>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                    <tbody id="total">
-                        <tr>
-                            <td colspan="3" class="text-right font-semibold text-lg italic">Total</td>
-                            <td class="text-right font-bold text-lg italic">{{ order.get_total }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </footer>
-        </article>
-    </section>
+                        </thead>
+                        <tbody>
+                        {% for order_product in order.orderproduct_set.all %}
+                            <tr class="hover:bg-slate-200 transition ease duration-300 border-b border-gray-300">
+                                <td class="text-left text-md text-stone-700 p-2 break-words">{{ order_product.product.name }}</td>
+                                <td class="text-right text-md text-stone-700 p-2">{{ order_product.product.price }}</td>
+                                <td class="text-right text-md text-stone-700 p-2">{{ order_product.quantity }}</td>
+                                <td class="text-right text-md text-stone-800 font-semibold p-2">{{ order_product.get_subtotal }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4 p-2">
+                                    <p class="font-semibold text-left text-md text-yellow-700">Your order hasn't products</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tbody id="total">
+                            <tr>
+                                <td colspan="3" class="text-right font-semibold text-lg italic p-2">Total</td>
+                                <td class="text-right font-bold text-lg italic p-2">{{ order.get_total }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </footer>
+            </article>
+        </section>
+
+    </div>
 
 {% endblock content %}
