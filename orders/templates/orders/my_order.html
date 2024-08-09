@@ -4,7 +4,7 @@
     My order
     {% if order %}
     	#{{ order.id }}
-    {% endif %} 
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -18,10 +18,12 @@
             <article class="block w-full">
                 <header class="inline-flex items-start justify-between w-full mb-8">
                     {#  status  #}
-                    <h3
-                        class="font-bold text-2xl text-blue-700"
-                        title="Username of order"
-                    >{{ order.status }}</h3>
+                    {% with order.get_status as status %}
+                        <h3
+                            class="font-bold text-2xl text-{{ status.color }}-700"
+                            title="Order status"
+                        >{{ status.name }}</h3>
+                    {% endwith %}
                     <time
                         class="font-medium text-lg text-gray-700 italic"
                         title="Order date"
@@ -60,6 +62,40 @@
                             </tr>
                         </tbody>
                     </table>
+
+                    <h3 class="font-bold text-xl mt-4">Important</h3>
+
+                    {# note #}
+                    <ul class="list-disc list-inside my-4">
+                        <li>Please note that if you cancel the order it will automatically be marked as inactive.</li>
+                        <li>If you mark the order as <strong>Confirmed</strong>, you will not be able to add or remove products.</li>
+                        <li>Once the order is confirmed it is processed to be <i>prepared</i> and <i>delivered</i>.</li>
+                        <li>Once the order is confirmed you <strong>must pay</strong> for the order.</li>
+                    </ul>
+
+                    {# actions #}
+                    <div class="flex flex-row gap-2 items-center justify-end mt-8">
+                        {% if order.status == 'UC' %}
+                            {# cancel order #}
+                            <form action="{% url 'set_order_status' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="status" value="CA">
+                                {% include 'components/buttons/common_button.html' with name="Cancel" color="red" type="submit" %}
+                            </form>
+                            {# confirm order #}
+                            <form action="{% url 'set_order_status' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="status" value="CO">
+                                {% include 'components/buttons/common_button.html' with name="Confirm" color="sky" type="submit" %}
+                            </form>
+                        {% endif %}
+                    </div>
+
+                    {# status errors #}
+                    {% for error in form.status.errors %}
+                        <span class="font-semibold text-red-700 text-sm">{{ error }}</span>
+                    {% endfor %}
+
                 </footer>
             </article>
         </section>
