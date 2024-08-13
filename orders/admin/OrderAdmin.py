@@ -1,11 +1,12 @@
 from django.contrib import admin
 
 from .OrderProductInlineAdmin import OrderProductInlineAdmin
-from orders.models import Order
+from ..forms import OrderForm
+from ..models import Order
 
 
 class OrderAdmin(admin.ModelAdmin):
-    model = Order
+    form = OrderForm
     inlines = [
         OrderProductInlineAdmin
     ]
