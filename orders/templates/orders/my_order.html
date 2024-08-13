@@ -18,12 +18,17 @@
             <article class="block w-full">
                 <header class="inline-flex items-start justify-between w-full mb-8">
                     {#  status  #}
-                    {% with order.get_status as status %}
+                    {% if order_status is not None %}
                         <h3
-                            class="font-bold text-2xl text-{{ status.color }}-700"
+                            class="font-bold text-2xl text-{{ order_status.color }}-700"
                             title="Order status"
-                        >{{ status.name }}</h3>
-                    {% endwith %}
+                        >{{ order_status.name }}</h3>
+                    {% else %}
+                        <h3
+                            class="font-bold text-2xl text-sky-500"
+                            title="Order status"
+                        >No order yet</h3>
+                    {% endif %}
                     <time
                         class="font-medium text-lg text-gray-700 italic"
                         title="Order date"
@@ -75,7 +80,7 @@
 
                     {# actions #}
                     <div class="flex flex-row gap-2 items-center justify-end mt-8">
-                        {% if order.status == 'UC' %}
+                        {% if order_status.key == 'UC' %}
                             {# cancel order #}
                             <form action="{% url 'set_order_status' %}" method="post">
                                 {% csrf_token %}

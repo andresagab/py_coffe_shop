@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -44,14 +45,16 @@ class Order(models.Model):
 
     def __str__(self) -> str:
         return f"order {self.id} by {self.user}"
-
+    
+    @admin.display(description="Total")
     def get_total(self):
         total = 0
         for order_product in self.orderproduct_set.all():
             total += order_product.get_subtotal()
         return total
 
-    def get_status(self, key: str = None):
+    @admin.display(description="Status")
+    def get_status(self, key: str = "name"):
         status = [status for status in self.STATUS_TYPES if status['key'] == self.status]
 
         # if status is not empty and key is None, then return dict

@@ -6,6 +6,16 @@ from ..models import Order
 
 
 class OrderAdmin(admin.ModelAdmin):
+    # data table
+    list_display = [
+        'id',
+        'user',
+        'is_active',
+        'get_total',
+        'get_status',
+    ]
+
+    # form
     form = OrderForm
     inlines = [
         OrderProductInlineAdmin
