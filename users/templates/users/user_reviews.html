@@ -1,0 +1,53 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+    My Reviews
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mx-auto w-full lg:w-max pt-4 lg:pt-0 lg:p-6">
+
+        {#  section title  #}
+        <h1 class="font-bold text-4xl pb-4 border-b border-gray-500 w-full mb-8">Reviews</h1>
+
+        <section class="flex flex-col gap-3">
+            {% for product_rating in product_ratings %}
+                <blockquote class="border border-gray-200 shadow-sm hover:shadow-lg rounded-md p-4 transition ease duration-150">
+                    <header class="flex flex-col gap-3">
+                        <div class="inline-flex items-start justify-start">
+                            {% with ''|center:product_rating.rating as range %}
+                                <div class="inline-block items-start" title="You rated this product with {{ product_rating.rating }}">
+                                    {% for _ in range %}
+                                        <span class="text-yellow-500 text-2xl">★</span>
+                                    {% endfor %}
+                                </div>
+                            {% endwith %}
+                        </div>
+                        <h3 class="font-semibold text-xl text-gray-800">{{ product_rating.product }}</h3>
+                    </header>
+                    <footer class="flex flex-col gap-4 mt-2">
+                        <p class="font-normal text-md text-gray-700 text-pretty">{{ product_rating.comment }}</p>
+                        <time
+                            class="grow font-normal text-md text-gray-700 italic text-right"
+                            title="Review date"
+                        >
+                            {{ product_rating.created_at|date }}
+                        </time>
+                    </footer>
+                </blockquote>
+            {% empty %}
+                <div class="block items-center text-center">
+                    <p class="font-semibold text-xl text-rose-700">No reviews yet 😥</p>
+                    <a
+                        href="{% url 'list_product' %}"
+                        class="font-medium text-lg text-blue-700 hover:underline"
+                    >Go to the products</a>
+                </div>
+            {% endfor %}
+        </section>
+
+
+    </div>
+
+{% endblock content %}
