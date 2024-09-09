@@ -1,0 +1,56 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+    Delete Review #{{ productrating.id }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mx-auto w-full lg:w-max pt-4 lg:pt-0 lg:p-6">
+
+        {#  section title  #}
+        <h1 class="font-bold text-4xl pb-4 border-b border-gray-500 w-full mb-8">Confirm Deletion</h1>
+
+        {#  paragraph  #}
+        <p class="font-medium text-lg lg:text-xl mb-4">¿Are you sure you want to delete this review?</p>
+
+        {#  review  #}
+        <blockquote class="border border-gray-200 shadow-sm hover:shadow-lg rounded-md p-4 transition ease duration-150 mb-6">
+            <header class="flex flex-col gap-3">
+                <div class="inline-flex items-start justify-start">
+                    {% with ''|center:productrating.rating as range %}
+                        <div class="inline-block items-start" title="You rated this product with {{ product_rating.rating }}">
+                            {% for _ in range %}
+                                <span class="text-yellow-500 text-2xl">★</span>
+                            {% endfor %}
+                        </div>
+                    {% endwith %}
+                </div>
+                <h3 class="font-semibold text-xl text-gray-800">{{ productrating.product }}</h3>
+            </header>
+            <footer class="flex flex-col gap-4 mt-2">
+                <p class="font-normal text-md text-gray-700 text-pretty">{{ productrating.comment }}</p>
+                <time
+                    class="grow font-normal text-md text-gray-700 italic text-right"
+                    title="Review date"
+                >
+                    {{ productrating.created_at|date }}
+                </time>
+            </footer>
+        </blockquote>
+
+        {#  delete form  #}
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ productrating.id }}">
+            <a
+                href="{% url 'my_reviews' %}"
+            >
+                {% include 'components/buttons/common_button.html' with name="Cancel" color="blue" %}
+            </a>
+            {% include 'components/buttons/common_button.html' with name="Delete" color="red" type="submit" %}
+        </form>
+
+    </div>
+
+{% endblock content %}
